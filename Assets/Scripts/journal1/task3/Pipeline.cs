@@ -43,6 +43,11 @@ public class Pipeline : MonoBehaviour
             }
         }
 
+        if (Input.GetMouseButtonUp(0))
+        {
+            mousePositions.Clear();
+        }
+
         time += Time.deltaTime;
 
     }
