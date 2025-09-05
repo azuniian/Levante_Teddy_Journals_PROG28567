@@ -23,25 +23,25 @@ public class Pipeline : MonoBehaviour
     void Update()
     {
         Vector2 mousePos = Input.mousePosition;
-        Vector2 origin = new Vector2(0, 0);
+        Vector2 currentPos = Camera.main.ScreenToWorldPoint(mousePos);
+        //Vector2 origin = new Vector2(0, 0);
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            mousePositions.Add(currentPos);
+            Debug.Log(mousePositions[lastPos]); 
+        }
 
         if (Input.GetMouseButton(0))
         {
-            mousePositions.Add(mousePos);
-            Debug.Log(mousePositions[lastPos]);
-            
-
-            if(time >= 0.1)
+            if (time >= 0.1)
             {
-                mousePositions.Add(mousePos);
-                Debug.DrawLine(mousePositions[lastPos], origin); //currently drawing a line between the current point and itself...need timer to add a new point after 0.1 seconds so i can then draw line between
+                mousePositions.Add(currentPos);
+                Debug.DrawLine(currentPos, mousePositions[lastPos], Color.white, Mathf.Infinity); //currently drawing a line between the current point and itself...need timer to add a new point after 0.1 seconds so i can then draw line between
                 lastPos++;
                 time = 0;
             }
-            
-            
         }
-
 
         time += Time.deltaTime;
 
