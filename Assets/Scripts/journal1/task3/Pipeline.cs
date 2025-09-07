@@ -1,5 +1,5 @@
 using System.Collections;
-using System.Collections.Generic; //referenced Unity API scripting (find link) to figure out how to get normal Lists to work with Unity 6000
+using System.Collections.Generic; //referenced Unity API scripting (https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/collections#BKMK_KindsOfCollections) to figure out how to get normal Lists to work with Unity 6000
 using System.Net.NetworkInformation;
 using Unity.Android.Types;
 using Unity.VisualScripting;
