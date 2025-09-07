@@ -22,28 +22,29 @@ public class Pipeline : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 mousePos = Input.mousePosition;
-        Vector2 currentPos = Camera.main.ScreenToWorldPoint(mousePos);
+        Vector2 mousePos = Input.mousePosition; //get mouse position at any given frame
+        Vector2 currentPos = Camera.main.ScreenToWorldPoint(mousePos); //get mouse position into world space
         //Vector2 origin = new Vector2(0, 0);
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)) //on mouse click, get the current mouse position into the list
         {
-            mousePositions.Add(currentPos);
+            mousePositions.Add(currentPos); //add the current mouse position to the list
             Debug.Log(mousePositions[lastPos]); 
         }
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0)) //checks to see if mouse is still being held
         {
-            if (time >= 0.1)
+            if (time >= 0.1) //check for timing and reset the time value if its been more than 0.1 seconds so that a new line can be drawn
             {
-                mousePositions.Add(currentPos);
-                Debug.DrawLine(currentPos, mousePositions[lastPos], Color.white, Mathf.Infinity); //currently drawing a line between the current point and itself...need timer to add a new point after 0.1 seconds so i can then draw line between
-                lastPos++;
-                time = 0;
+                mousePositions.Add(currentPos); //add the new mouse position to the list
+                Debug.DrawLine(currentPos, mousePositions[lastPos], Color.white, Mathf.Infinity); //draw a line between the current position (currentPos) and
+                //the second newest mouse position in the list
+                lastPos++; //add to the lastPos integer value so next time the current position will become the 'last' position
+                time = 0; //reset time
             }
         }
 
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0)) //calculates magnitude of whole line, then clears the list so a new line can be drawn again
         {
             mousePositions.Clear();
         }
