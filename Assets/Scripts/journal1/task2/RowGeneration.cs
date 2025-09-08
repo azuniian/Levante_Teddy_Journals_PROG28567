@@ -4,7 +4,7 @@ public class RowGeneration : MonoBehaviour
 {
     
     public TMPro.TMP_InputField inputField;
-    public TMPro.TMP_Text text;
+    //public TMPro.TMP_Text text;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,6 +20,6 @@ public class RowGeneration : MonoBehaviour
 
     public void TextChecker()
     {
-        Debug.Log(text.ToString());
+        Debug.Log(inputField.text);
     }
 }

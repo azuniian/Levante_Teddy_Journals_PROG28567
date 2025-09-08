@@ -26,7 +26,7 @@ public class SquareSpawner : MonoBehaviour
 
         
         //get the changing value of side size based on scroll wheel
-        sideSize += Input.mouseScrollDelta.y;
+        sideSize += Input.mouseScrollDelta.y; //https://docs.unity3d.com/6000.0/Documentation/ScriptReference/Input-mouseScrollDelta.html
         Debug.Log(sideSize);
        
 
