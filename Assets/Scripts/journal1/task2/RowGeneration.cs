@@ -23,7 +23,7 @@ public class RowGeneration : MonoBehaviour
         //Debug.Log(inputField.text);
         if (int.TryParse(inputField.text, out int value) && value >= 0)
         {
-            for (int i = 0; i < value, i++) {
+            for (int i = 0; i < value; i++) {
                 //create a new point that changes position for each iteration of the for loop
                 Vector2 newPoint = new Vector2(i, 0);
 
