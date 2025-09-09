@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    public TMPro.TMP_InputField ratioInputField;
+
     public List<Transform> asteroidTransforms;
     public Transform enemyTransform;
     public GameObject bombPrefab;
@@ -34,12 +37,28 @@ public class Player : MonoBehaviour
             SpawnBombAtOffset(offset);
         }
 
-        //warp drive exercise
+
+        //warp player method call
+        if (Input.GetKeyDown(KeyCode.W))
+        { 
+            if (float.TryParse(ratioInputField.text, out float value) && value >= 0 && value <= 1)
+            {
+                WarpPlayer(enemyTransform, value);
+            } 
+        }
+
+
+        /*//warp drive exercise in class
         if (Input.GetKeyDown(KeyCode.W))
         {
-            Vector2 distanceToWarp = new Vector2(3, 0);
+            Vector2 distanceToWarp = new Vector2(3, 0); 
+            
+            //find distance between enemy ship and player
+            //multiply by the inputfield value (0 to 1) to determine how much of distance has to be elapsed
+            //method call to do the movement
+
             WarpOver(distanceToWarp, speed, directionToMove);
-        }
+        }*/
     }
 
     //bomb example exercise method
@@ -49,7 +68,20 @@ public class Player : MonoBehaviour
         Instantiate(bombPrefab, (transform.position + inOffset), Quaternion.identity); //https://docs.unity3d.com/6000.2/Documentation/ScriptReference/Object.Instantiate.html instantiate parameters taken from here
     }
 
-    //warp drive example exercise method
+
+    //warp drive task
+    public void WarpPlayer(Transform target, float ratio)
+    {
+        Vector3 targetVector = target.position;
+        Vector3 playerPosition = transform.position;
+        Vector3 warpDirection = targetVector - playerPosition;
+
+        transform.position += (Vector3)warpDirection * ratio;
+    }
+
+
+
+    /*//warp drive example exercise method in class
     public void WarpOver(Vector2 warpDistance, float speed, Vector2 warpDirection)
     {
         //find a warp direction to ensure it isn't just going one way
@@ -57,5 +89,5 @@ public class Player : MonoBehaviour
         
         //warp a set vector distance (currently 3 units in the x axis)
         transform.position += (Vector3)warpDistance * speed;
-    }
+    }*/
 }
