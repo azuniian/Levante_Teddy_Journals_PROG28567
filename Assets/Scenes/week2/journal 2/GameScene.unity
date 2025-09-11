@@ -3853,6 +3853,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6890330259706833056, guid: abc125f00ae369940b2c5c0275186637, type: 3}
+      propertyPath: inBombSpacing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890330259706833056, guid: abc125f00ae369940b2c5c0275186637, type: 3}
       propertyPath: maxRadarRange
       value: 2
       objectReference: {fileID: 0}
@@ -3864,6 +3868,10 @@ PrefabInstance:
       propertyPath: enemyTransform
       value: 
       objectReference: {fileID: 892270334}
+    - target: {fileID: 6890330259706833056, guid: abc125f00ae369940b2c5c0275186637, type: 3}
+      propertyPath: inNumberOfBombs
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6890330259706833056, guid: abc125f00ae369940b2c5c0275186637, type: 3}
       propertyPath: playerTransform
       value: 

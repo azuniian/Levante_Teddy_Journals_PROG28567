@@ -87,7 +87,7 @@ public class Player : MonoBehaviour
     {
         for(int i = 1; i <= inNumberOfBombs; i++)
         {
-            Vector3 bombSpawnPosOffset = new Vector3(transform.position.x, i * inBombSpacing, transform.position.z);
+            Vector3 bombSpawnPosOffset = new Vector3(0, i * inBombSpacing, transform.position.z);
             //Debug.Log(transform.position - bombSpawnPosOffset);
             Instantiate(bombPrefab, (transform.position - bombSpawnPosOffset), Quaternion.identity);
         }
