@@ -46,6 +46,7 @@ public class Player : MonoBehaviour
         //check for key press
         if (Input.GetKeyDown(KeyCode.T))
         {
+            Debug.Log(transform.position);
             SpawnBombTrail(inBombSpacing, inNumberOfBombs);
         }
 
