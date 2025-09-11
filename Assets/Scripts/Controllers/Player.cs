@@ -11,6 +11,11 @@ public class Player : MonoBehaviour
     public Transform enemyTransform;
     public GameObject bombPrefab;
     public Transform bombsTransform;
+
+    //journal task 1B variables
+    public int inNumberOfBombs;
+    public float inBombSpacing;
+
     //public Transform playerTransform;
 
     void Update()
@@ -35,6 +40,13 @@ public class Player : MonoBehaviour
         {
             Vector3 offset = new Vector3(0, 1, 0); //offset from the player
             SpawnBombAtOffset(offset);
+        }
+
+        //bomb trail journal task 1B
+        //check for key press
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            SpawnBombTrail(inBombSpacing, inNumberOfBombs);
         }
 
 
@@ -66,6 +78,18 @@ public class Player : MonoBehaviour
     public void SpawnBombAtOffset(Vector3 inOffset)
     {
         Instantiate(bombPrefab, (transform.position + inOffset), Quaternion.identity); //https://docs.unity3d.com/6000.2/Documentation/ScriptReference/Object.Instantiate.html instantiate parameters taken from here
+    }
+
+    //bomb trail journal task 1B method
+    //method to spawn bomb trail after bomb location with inputted spacing and number of bomb values
+    public void SpawnBombTrail(float inBombSpacing, int inNumberOfBombs)
+    {
+        for(int i = 1; i <= inNumberOfBombs; i++)
+        {
+            Vector3 bombSpawnPosOffset = new Vector3(transform.position.x, i * inBombSpacing, transform.position.z);
+            //Debug.Log(transform.position - bombSpawnPosOffset);
+            Instantiate(bombPrefab, (transform.position - bombSpawnPosOffset), Quaternion.identity);
+        }
     }
 
 
