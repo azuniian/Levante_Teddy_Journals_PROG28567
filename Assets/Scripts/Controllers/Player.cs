@@ -56,6 +56,7 @@ public class Player : MonoBehaviour
         { 
             if (float.TryParse(ratioInputField.text, out float value) && value >= 0 && value <= 1)
             {
+                Debug.Log(enemyTransform.position);
                 WarpPlayer(enemyTransform, value);
             } 
         }
@@ -97,6 +98,7 @@ public class Player : MonoBehaviour
     //warp drive task
     public void WarpPlayer(Transform target, float ratio)
     {
+        Debug.Log(target.position);
         Vector3 targetVector = target.position;
         Vector3 playerPosition = transform.position;
         Vector3 warpDirection = targetVector - playerPosition;
