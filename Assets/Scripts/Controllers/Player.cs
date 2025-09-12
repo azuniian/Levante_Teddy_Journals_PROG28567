@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    public TMPro.TMP_InputField ratioInputField;
-
     public List<Transform> asteroidTransforms;
     public Transform enemyTransform;
     public GameObject bombPrefab;
@@ -19,7 +17,13 @@ public class Player : MonoBehaviour
     //journal task 2 variables
     public float inDistance;
 
-    //public Transform playerTransform;
+    //journal task 3 variables
+    public TMPro.TMP_InputField ratioInputField;
+    
+    //journal task 4 variables
+    public float inMaxRange;
+
+
 
     void Update()
     {
@@ -35,6 +39,7 @@ public class Player : MonoBehaviour
         {
             transform.position += (Vector3)directionToMove.normalized * speed; //normalized to not change the amount moved depending on distance between player and enemy
         }
+
 
 
         //bomb example exercise
@@ -74,7 +79,6 @@ public class Player : MonoBehaviour
             } 
         }
 
-
         /*//warp drive exercise in class
         if (Input.GetKeyDown(KeyCode.W))
         {
@@ -86,6 +90,14 @@ public class Player : MonoBehaviour
 
             WarpOver(distanceToWarp, speed, directionToMove);
         }*/
+
+
+
+        //radar method call
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            DetectAsteroids(inMaxRange, asteroidTransforms);
+        }
     }
 
 
@@ -110,7 +122,9 @@ public class Player : MonoBehaviour
     }
 
 
-
+    
+    //bomb spawn in corner journal task 2 method
+    //method to choose a random corner, change the offset based on which corner is chosen, and then spawn a bomb at the player's location times the distance float away from the player in a corner using an offset value
     public void SpawnBombOnRandomCorner(float inDistance)
     {
         //Debug.Log(inDistance);
@@ -160,6 +174,32 @@ public class Player : MonoBehaviour
         Vector3 warpDirection = targetVector - playerPosition;
 
         transform.position += (Vector3)warpDirection * ratio;
+    }
+
+
+
+    //journal 2 radar task (task 4/5) method
+    //method to activate a radar which draws lines from the player in the direction of any asteroids which fall 'in range' of the player
+    public void DetectAsteroids(float inMaxRange, List<Transform> inAsteroids)
+    {
+        for (int i = 0; i < inAsteroids.Count; i++) //checks each instance of an asteroid in the list by going through each indexed value
+        {
+            //find distance between the current asteroid being checked and the player
+            float distanceBetween = Vector3.Distance(transform.position, inAsteroids[i].position); //used https://docs.unity3d.com/ScriptReference/Vector3.Distance.html to figure out the distance function syntax
+
+            if (distanceBetween <= inMaxRange) //check for if it is in range
+            {
+                ////get direction towards the asteroid
+                //Vector3 lineDirection = (inAsteroids[i].position - transform.position).normalized;
+
+                ////get the coordinates of the line (2.5 length)
+                //Vector3 lineBetween = lineDirection.normalized * 2.5f;
+
+                //draw line between position and the line end point
+                Debug.DrawLine(transform.position, inAsteroids[i].position, Color.green, 5);
+            }
+            //Debug.Log(inAsteroids[i].position);
+        }
     }
 
 
