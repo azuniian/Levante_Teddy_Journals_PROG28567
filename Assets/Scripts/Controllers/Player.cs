@@ -16,6 +16,9 @@ public class Player : MonoBehaviour
     public int inNumberOfBombs;
     public float inBombSpacing;
 
+    //journal task 2 variables
+    public float inDistance;
+
     //public Transform playerTransform;
 
     void Update()
@@ -51,6 +54,16 @@ public class Player : MonoBehaviour
         }
 
 
+
+        //corner bomb spawn journal task 2
+        //spawn bomb on corner method call
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            SpawnBombOnRandomCorner(inDistance);
+        }
+
+
+
         //warp player method call
         if (Input.GetKeyDown(KeyCode.W))
         { 
@@ -75,6 +88,8 @@ public class Player : MonoBehaviour
         }*/
     }
 
+
+
     //bomb example exercise method
     //method to spawn a bomb at the player's location plus the offset
     public void SpawnBombAtOffset(Vector3 inOffset)
@@ -95,7 +110,48 @@ public class Player : MonoBehaviour
     }
 
 
-    //warp drive task
+
+    public void SpawnBombOnRandomCorner(float inDistance)
+    {
+        //Debug.Log(inDistance);
+        Vector3 bombSpawnCornerOffset = new Vector3();
+        
+        //determine which corner is being chosen using Random.Range() function
+        int whichCorner = Random.Range(1, 5); //used https://docs.unity3d.com/ScriptReference/Random.Range.html to check on the int version of the Range function, since usually it is done with floats and couldn't remember if the inclusivity of parameters were the same with the int version
+        //change the corner offset based on what value is chosen
+        if (whichCorner == 1) //top left corner
+        {
+            bombSpawnCornerOffset = (Vector3.up + Vector3.left) * inDistance;
+            Debug.Log("spawning at top left corner");
+        }
+
+        else if (whichCorner == 2) //top right corner
+        {
+            bombSpawnCornerOffset = (Vector3.up + Vector3.right) * inDistance;
+            Debug.Log("spawning at top right corner");
+        }
+
+        else if(whichCorner == 3) //bottom left corner
+        {
+            bombSpawnCornerOffset = (Vector3.down + Vector3.left) * inDistance;
+            Debug.Log("spawning at bottom left corner");
+        }
+
+        else if(whichCorner==4) //bottom right corner
+        {
+            bombSpawnCornerOffset = (Vector3.down + Vector3.right) * inDistance;
+            Debug.Log("spawning at bottom right corner");
+        }
+        //Debug.Log(whichCorner);
+
+        //spawn corner bomb
+        Instantiate(bombPrefab, (transform.position + bombSpawnCornerOffset), Quaternion.identity);
+    }
+
+
+
+    //journal 2 warp drive task (task 3) method
+    //method to warp player to enemy position
     public void WarpPlayer(Transform target, float ratio)
     {
         Debug.Log(target.position);
