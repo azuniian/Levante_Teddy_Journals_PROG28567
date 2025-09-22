@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
             Vector3 direction = Vector3.zero;
 
             //decrease velocity to the right
-            direction += Vector3.right;
+            direction -= Vector3.right;
             direction = direction.normalized;
 
             for (float i = 0; i <= decelerationTime; i+=Time.deltaTime)
@@ -165,7 +165,7 @@ public class Player : MonoBehaviour
         if (whichDirection == 2)
         {
             //move right
-            if (Input.GetKeyUp(KeyCode.RightArrow))
+            if (Input.GetKey(KeyCode.RightArrow))
             {
                 transform.position += inVelocity;
             }
