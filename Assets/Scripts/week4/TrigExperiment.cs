@@ -17,12 +17,21 @@ public class TrigExperiment : MonoBehaviour
         
 
         //draw a line towards an angle in class exercise
-        float angleInDegrees = 90f;
+        float angleInDegrees = -45f;
         float angleInRadians = angleInDegrees * Mathf.Deg2Rad;
         float angleInDegreesAgain = angleInRadians * Mathf.Rad2Deg;
 
         float x = Mathf.Cos(angleInRadians);
         float y = Mathf.Sin(angleInRadians);
+
+
+        //float angleFromInverseFunction = Mathf.Asin(y / 1) * Mathf.Rad2Deg;
+        //Debug.Log("original angle: " + angleInDegrees + " angle from inverse function: " + angleFromInverseFunction);
+
+        //starting with x and y, want to convert back to angle value
+        float convertedAngle = Mathf.Atan2(y, x) * Mathf.Rad2Deg;
+        Debug.Log("original angle: " + angleInDegrees + " angle from inverse function: " + convertedAngle);
+
 
         Vector3 pointOnCircle = new Vector3(x, y, 0);
         Debug.DrawLine(Vector3.zero, pointOnCircle, Color.red, 15);

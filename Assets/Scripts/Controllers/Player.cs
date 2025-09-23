@@ -22,8 +22,11 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        //in-class exercise/journal 1 method call
         DrawRadar(radarRadius, numberOfPoints);
     }
+
+
 
     //in-class exercise (player radar)
     public void DrawRadar(float radius, int points)
@@ -46,7 +49,7 @@ public class Player : MonoBehaviour
         {
             if( i < points - 1)
             {
-                Debug.Log(i);
+                //Debug.Log(i);
                 Debug.DrawLine(unitCirclePoints[i], unitCirclePoints[i+1], Color.green, 15);
             }
             

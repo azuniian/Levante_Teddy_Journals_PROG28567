@@ -1744,6 +1744,8 @@ MonoBehaviour:
   - 235
   i: 0
   circleRadius: 1
+  newOriginX: 2
+  newOriginY: 3
 --- !u!4 &1156281863
 Transform:
   m_ObjectHideFlags: 0
@@ -3907,6 +3909,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6890330259706833056, guid: abc125f00ae369940b2c5c0275186637, type: 3}
+      propertyPath: radarRadius
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890330259706833056, guid: abc125f00ae369940b2c5c0275186637, type: 3}
       propertyPath: bombOffset.x
       value: 3
       objectReference: {fileID: 0}
@@ -3930,6 +3936,10 @@ PrefabInstance:
       propertyPath: enemyTransform
       value: 
       objectReference: {fileID: 892270334}
+    - target: {fileID: 6890330259706833056, guid: abc125f00ae369940b2c5c0275186637, type: 3}
+      propertyPath: numberOfPoints
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6890330259706833056, guid: abc125f00ae369940b2c5c0275186637, type: 3}
       propertyPath: inNumberOfBombs
       value: 0
