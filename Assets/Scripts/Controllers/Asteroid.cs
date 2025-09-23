@@ -7,11 +7,13 @@ public class Asteroid : MonoBehaviour
     public float moveSpeed;
     public float arrivalDistance;
     public float maxFloatDistance;
+    public Vector3 randomDirectionVector;
 
     // Start is called before the first frame update
     void Start()
     {
         bool firstPointFound = false;
+        randomDirectionVector = new Vector3(Random.Range(-1, 1.1f), Random.Range(-1, 1.1f), 0);
     }
 
     // Update is called once per frame
@@ -28,8 +30,8 @@ public class Asteroid : MonoBehaviour
         Vector3 position = transform.position;
 
 
-        Vector3 randomDirectionVector = new Vector3(Random.Range(-1, 1.1f), Random.Range(-1, 1.1f), 0);
-        randomDirection = randomDirectionVector;
+        
+        randomDirection += randomDirectionVector;
         randomDirection = randomDirection.normalized;
         randomDirection = randomDirection * maxFloatDistance;
 
