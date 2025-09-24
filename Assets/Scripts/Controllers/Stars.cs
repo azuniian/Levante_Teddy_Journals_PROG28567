@@ -9,10 +9,12 @@ public class Stars : MonoBehaviour
 
     public float acceleration;
     public float drawSpeed = 3;
+    public int i;
 
     private void Start()
     {
         acceleration = drawSpeed / drawingTime;
+        i = 0;
     }
 
     // Update is called once per frame
@@ -27,30 +29,86 @@ public class Stars : MonoBehaviour
     public void DrawConstellation()
     {
 
-        for(int i = 0; i < starTransforms.Count; i++)
+        for (int i = 0; i < starTransforms.Count; i++)
         {
-            float distance = Vector3.Distance(starTransforms[i].position, starTransforms[i + 1].position);
-            
-            //create direction vector between the two stars and then normalize it to get a magnitude of 1
-            Vector3 direction = (starTransforms[i].position - starTransforms[i+1].position).normalized;
-
-            //create velocity vector and update it with acceleration logic
-            Vector3 velocity = direction * acceleration * Time.deltaTime;
-
-            //multiply by the normalized direction vector by the velocity until the magnitude of the direction vector is >= the distance between the stars
-            if(direction.magnitude < distance)
+            if (i < starTransforms.Count - 1)
             {
-                float distCovered = Time.deltaTime * drawSpeed;
-                Vector3 currentPos = Vector3.Lerp(starTransforms[i].position, starTransforms[i + 1].position, distCovered / distance);
-                Debug.DrawLine(starTransforms[i].position, currentPos);
+                float distance = Vector3.Distance(starTransforms[i].position, starTransforms[i + 1].position);
+
+                //create direction vector between the two stars and then normalize it to get a magnitude of 1
+                Vector3 direction = (starTransforms[i].position - starTransforms[i + 1].position).normalized;
+
+                //create velocity vector and update it with acceleration logic
+                Vector3 velocity = direction * acceleration * Time.deltaTime;
+
+                //multiply by the normalized direction vector by the velocity until the magnitude of the direction vector is >= the distance between the stars
+                if (direction.magnitude < distance)
+                {
+                    //for (float i2 = 0; i2 < distance; i2 += Time.deltaTime * drawSpeed)
+                    //{
+                        float distCovered = Time.deltaTime * drawSpeed;
+                        //Vector3 currentPos = Vector3.Lerp(starTransforms[i].position, starTransforms[i + 1].position, distCovered / distance);
+                        Debug.DrawLine(starTransforms[i].position, Vector3.Lerp(starTransforms[i].position, starTransforms[i+1].position, distCovered/distance), Color.white, 5);
+                    //}
+                }
+                //draw the line with each different velocity value (each time the acceleration is added to the velocity
             }
-            //draw the line with each different velocity value (each time the acceleration is added to the velocity
-            
+
+            else if (i == starTransforms.Count - 1)
+            {
+                Debug.DrawLine(starTransforms[i].position, starTransforms[0].position, Color.white, 5);
+            }
+
         }
 
-        //Vector3 currentStar = starTransforms[i].position;
-        //Vector3 nextStar = starTransforms[i+1].position;
 
-        //Debug.DrawLine(currentStar, nextStar, Color.white, drawingTime);
+
+        //if(i < starTransforms.Count - 1)
+        //{
+        //    for(int j = 0; j < starTransforms.Count - 1; j++)
+        //    {
+        //        float distance = Vector3.Distance(starTransforms[j].position, starTransforms[j + 1].position);
+        //        Debug.Log(distance);
+
+        //        //create direction vector between the two stars and then normalize it to get a magnitude of 1
+        //        Vector3 direction = (starTransforms[j].position - starTransforms[j + 1].position).normalized;
+
+        //        //create velocity vector and update it with acceleration logic
+        //        Vector3 velocity = direction * acceleration * Time.deltaTime;
+
+        //        float distCovered = Time.deltaTime * drawSpeed;
+
+
+
+        //    }
+
+
+
+
+        //    /*//multiply by the normalized direction vector by the velocity until the magnitude of the direction vector is >= the distance between the stars
+        //    if (direction.magnitude < distance)
+        //    {
+
+
+        //        Debug.Log(i);
+        //        Vector3 currentPos = Vector3.Lerp(starTransforms[i].position, starTransforms[i + 1].position, distCovered / distance);
+        //        Debug.DrawLine(starTransforms[i].position, currentPos, Color.white, 5);
+        //        i++;
+
+        //    }*/
+
+        //    Vector3 currentStar = starTransforms[i].position;
+        //    Vector3 nextStar = starTransforms[i + 1].position;
+
+        //    Debug.DrawLine(currentStar, nextStar, Color.white, drawingTime);
+
+        //    Debug.Log(i);
+        //    i++;
+        //}
+
+        //else
+        //{
+        //    i = 0;
+        //}
     }
 }

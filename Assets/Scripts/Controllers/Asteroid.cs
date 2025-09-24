@@ -12,7 +12,7 @@ public class Asteroid : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bool firstPointFound = false;
+        //bool firstPointFound = false;
         randomDirectionVector = new Vector3(Random.Range(-1, 1.1f), Random.Range(-1, 1.1f), 0);
     }
 
