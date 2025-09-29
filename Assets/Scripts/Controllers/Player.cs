@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
     {
         float angleInDegrees = 360 / points;
 
+        //finding all points in the circle and adding them to the list of points
         for(int i = 1; i <= points; i++)
         {
             //unit circle values exercise
@@ -40,23 +41,45 @@ public class Player : MonoBehaviour
             float unitCircleY = Mathf.Sin((angleInDegrees*i) * Mathf.Deg2Rad); //get the current unit circle y value in radians from the list
 
             Vector3 pointOnUnitCircle = new Vector3(unitCircleX, unitCircleY, 0); //create a vector3 to hold the current x and y values from the list
-            pointOnUnitCircle = pointOnUnitCircle * radius; //multiply it by the circle radius to change the line length
+            pointOnUnitCircle = (pointOnUnitCircle * radius) + transform.position; //multiply it by the circle radius to change the line length
 
             unitCirclePoints.Add(pointOnUnitCircle);
         }
 
+        //drawing the radar circle
         for (int i = 0; i < points; i++)
         {
-            if( i < points - 1)
+            Vector3 enemyPos = enemyTransform.position;
+            float distBetween = Vector3.Distance(enemyPos, transform.position);
+
+            if (distBetween > radius)
             {
-                //Debug.Log(i);
-                Debug.DrawLine(unitCirclePoints[i], unitCirclePoints[i+1], Color.green, 15);
+                if (i < points - 1)
+                {
+                    //Debug.Log(i);
+                    Debug.DrawLine(unitCirclePoints[i], unitCirclePoints[i + 1], Color.green, 15);
+                }
+
+                else if (i == points - 1)
+                {
+                    Debug.DrawLine(unitCirclePoints[unitCirclePoints.Count - 1], unitCirclePoints[0], Color.green, 15);
+                }
+            }
+
+            else if (distBetween < radius)
+            {
+                if (i < points - 1)
+                {
+                    //Debug.Log(i);
+                    Debug.DrawLine(unitCirclePoints[i], unitCirclePoints[i + 1], Color.red, 15);
+                }
+
+                else if (i == points - 1)
+                {
+                    Debug.DrawLine(unitCirclePoints[unitCirclePoints.Count - 1], unitCirclePoints[0], Color.red, 15);
+                }
             }
             
-            else if(i == points - 1)
-            {
-                Debug.DrawLine(unitCirclePoints[unitCirclePoints.Count - 1], unitCirclePoints[0], Color.green, 15);
-            }
         }
         
         unitCirclePoints.Clear();
