@@ -42,6 +42,7 @@ public class Player : MonoBehaviour
     }
 
 
+    //journal task 2 method (powerup spawning)
     public void SpawnPowerups(float radius, int numberOfPowerups)
     {
         float powerupAngleDegrees = 360 / numberOfPowerups;
