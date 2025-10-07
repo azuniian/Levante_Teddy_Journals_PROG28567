@@ -63,18 +63,37 @@ public class Player : MonoBehaviour
             i++;
         }
 
+
+        //find the amount of sides that need to be drawn
+        float tempNumberOfSides = unitCirclePoints.Count;
+        if(tempNumberOfSides%2 == 0) //even
+        {
+            int setsOfSides = (int)(tempNumberOfSides/2);
+            Debug.Log(setsOfSides);
+            Debug.Log("even");
+            bool evenNumber = true;
+        }
+        else //odd
+        {
+            int setsOfSides = (int)((tempNumberOfSides / 2) + 1);
+            Debug.Log(setsOfSides);
+            Debug.Log("odd");
+            bool evenNumber = false;
+        }
+
+
         int j = 0;
         while (j < points)
         {
             if (j < points - 1)
             {
                 //Debug.Log(i);
-                Debug.DrawLine(unitCirclePoints[j], unitCirclePoints[j + 1], Color.green, 5);
+                Debug.DrawLine(unitCirclePoints[j] + transform.position, unitCirclePoints[j + 1] + transform.position, Color.green, 3);
             }
 
             else if (j == points - 1)
             {
-                Debug.DrawLine(unitCirclePoints[unitCirclePoints.Count - 1], unitCirclePoints[0], Color.green, 5);
+                Debug.DrawLine(unitCirclePoints[unitCirclePoints.Count - 1] + transform.position, unitCirclePoints[0] + transform.position, Color.green, 3);
             }
             j++;
             yield return new WaitForSeconds(time);
