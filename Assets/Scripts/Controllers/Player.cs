@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+   
     public List<Transform> asteroidTransforms;
     public Transform enemyTransform;
     public GameObject bombPrefab;
     public Transform bombsTransform;
 
+    //vector mechanic proposal variables
     public TMPro.TMP_InputField pointsInputField;
 
     public float shieldRadius;
@@ -20,6 +23,22 @@ public class Player : MonoBehaviour
 
     private IEnumerator drawCoroutine;
     public bool coroutineStopped = false;
+
+
+
+    //rotation mechanic proposal variables
+    public TMPro.TMP_InputField projectileInputField;
+
+    public GameObject projectilePrefab;
+    public Transform projectileTransform;
+    public Vector3 projectileStartPos;
+    public float rotationRadius;
+    public float rotationSpeed;
+    public int numberOfProjectiles;
+
+    public List<GameObject> projectilesSpawned = new List<GameObject>();
+
+
 
     public void Start()
     {
@@ -41,7 +60,50 @@ public class Player : MonoBehaviour
 
         }
 
+        projectileRotation();
+
     }
+
+
+
+    public void projectileRotation()
+    {
+        //get the projectile starting position for when it spawns - want this at the top so that if the player ship is moved, it will update before spawning
+        projectileStartPos = transform.position + Vector3.up * rotationRadius;
+        
+        //check for spacebar input
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("space pressed");
+
+            //first, get the amount of projectiles
+            if (int.TryParse(projectileInputField.text, out int projectiles) && projectiles > 0)
+            {
+                //set the projectiles value to a variable, then use it to spawn the correct number of projectiles in front of the player ship
+                numberOfProjectiles = projectiles;
+                
+                for (int i = 0; i < numberOfProjectiles; i++)
+                {
+                    GameObject newProjectile = Instantiate(projectilePrefab, projectileStartPos, Quaternion.identity);
+                    projectilesSpawned.Add(newProjectile);
+                    Debug.Log("spawned projectiles"); 
+                }
+
+            }
+        }
+
+        
+        //actual rotation happens with transform.Rotate() function
+        for (int i = 0; i < numberOfProjectiles; i++) 
+        {
+            float angleToChange = -rotationSpeed * Time.deltaTime;
+            //Debug.Log(angleToChange);
+            //need to rotate each projectile in the list
+            projectilesSpawned[i].transform.Rotate(0f, 0f, angleToChange);
+            //Debug.Log(projectilesSpawned[i].transform.position);
+        }
+    }
+
 
 
     private IEnumerator drawSections(float points, float time)
