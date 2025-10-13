@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 public class Player : MonoBehaviour
 {
@@ -35,6 +36,9 @@ public class Player : MonoBehaviour
     public float rotationRadius;
     public float rotationSpeed;
     public int numberOfProjectiles;
+
+    private IEnumerator spawnCoroutine;
+    public float waitingTime;
 
     public List<GameObject> projectilesSpawned = new List<GameObject>();
 
@@ -81,27 +85,67 @@ public class Player : MonoBehaviour
             {
                 //set the projectiles value to a variable, then use it to spawn the correct number of projectiles in front of the player ship
                 numberOfProjectiles = projectiles;
-                
-                for (int i = 0; i < numberOfProjectiles; i++)
-                {
-                    GameObject newProjectile = Instantiate(projectilePrefab, projectileStartPos, Quaternion.identity);
-                    projectilesSpawned.Add(newProjectile);
-                    Debug.Log("spawned projectiles"); 
-                }
 
+                //find the amount of time to wait between spawning projectiles
+                //get circumference of circle based on radius
+                float pi = Mathf.PI;
+                float circumference = 2 * pi * rotationRadius;
+                //find the distance between each projectile
+                float distBetweenProjectiles = circumference / numberOfProjectiles;
+                //find the time it takes to get to that point by using the speed formula and rearranging
+                //velocity formula is s = d/t where s = speed, d = distance and t = time
+                //therefore it should be time = distance/speed
+                waitingTime = distBetweenProjectiles / rotationSpeed;
+
+                spawnCoroutine = spawnProjectiles(projectiles, waitingTime);
+                StartCoroutine(spawnProjectiles(projectiles, waitingTime));
             }
         }
 
-        
-        //actual rotation happens with transform.Rotate() function
-        for (int i = 0; i < numberOfProjectiles; i++) 
+        foreach(GameObject projectile in projectilesSpawned)
         {
-            float angleToChange = -rotationSpeed * Time.deltaTime;
-            //Debug.Log(angleToChange);
-            //need to rotate each projectile in the list
-            projectilesSpawned[i].transform.Rotate(0f, 0f, angleToChange);
-            //Debug.Log(projectilesSpawned[i].transform.position);
+            Vector3 targetVector = transform.position;
+            //get a direction
+            Vector3 direction = Vector3.zero;
+            direction = projectile.transform.position - targetVector;
+            direction = direction.normalized;
+            //Debug.DrawLine(Vector3.zero, direction);
+
+            //use atan2 to find the angle
+            float angleInRadians = Mathf.Atan2(direction.y, direction.x);
+
+            //multiply the angle by the speed so it knows how much to change
+            angleInRadians += -rotationSpeed * Time.deltaTime;
+
+            //third time's the charm! had to find the new point by using the angle found with the direction vector and atan2
+            float x = Mathf.Cos(angleInRadians);
+            float y = Mathf.Sin(angleInRadians);
+
+            //put the x and y into a new Vector3
+            Vector3 orbitPos = new Vector3(x, y, 0);
+            //THEN multiply by the radius to ensure that the radius is included, then add the targetVector to make sure that it is actually orbiting the planet
+            orbitPos = (orbitPos * rotationRadius) + targetVector;
+
+            //reset the position
+            projectile.transform.position = orbitPos;
         }
+        
+    }
+
+
+    private IEnumerator spawnProjectiles(float projectileAmount, float time)
+    {
+        int i = 0;
+        while (i < projectileAmount)
+        {
+            GameObject newProjectile = Instantiate(projectilePrefab, projectileStartPos, Quaternion.identity);
+            projectilesSpawned.Add(newProjectile);
+            Debug.Log("spawned projectiles");
+
+            yield return new WaitForSeconds(time);
+            i++;
+        }
+        
     }
 
 
